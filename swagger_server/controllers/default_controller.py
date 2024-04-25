@@ -17,7 +17,7 @@ def search_comercializacao(produto_search_string, ano_search_string=None):  # no
     :param produto_search_string: pass a product name search string for looking up comercializacao
     :type produto_search_string: str
     :param ano_search_string: pass a year search string for looking up comercializacao
-    :type ano_search_string: int
+    :type ano_search_string: str
 
     :rtype: List[ComercializacaoItem]
     """
@@ -34,7 +34,7 @@ def search_exportacao(processamento_category_search_string, processamento_produc
     :param processamento_product_search_string: pass a product name search string for looking up exportacao
     :type processamento_product_search_string: str
     :param ano_search_string: pass a year search string for looking up exportacao
-    :type ano_search_string: int
+    :type ano_search_string: str
 
     :rtype: List[ExportacaoItem]
     """
@@ -51,7 +51,7 @@ def search_importacao(processamento_category_search_string, processamento_produc
     :param processamento_product_search_string: pass a product name search string for looking up importacao
     :type processamento_product_search_string: str
     :param ano_search_string: pass a year search string for looking up importacao
-    :type ano_search_string: int
+    :type ano_search_string: str
 
     :rtype: List[ImportacaoItem]
     """
@@ -68,7 +68,7 @@ def search_processamento(processamento_category_search_string, processamento_pro
     :param processamento_product_search_string: pass a product name search string for looking up processamento
     :type processamento_product_search_string: str
     :param ano_search_string: pass a year search string for looking up processamento
-    :type ano_search_string: int
+    :type ano_search_string: str
 
     :rtype: List[ProcessamentoItem]
     """
@@ -83,7 +83,7 @@ def search_producao(produto_search_string, ano_search_string=None):  # noqa: E50
     :param produto_search_string: pass a product name search string for looking up producao
     :type produto_search_string: str
     :param ano_search_string: pass a year search string for looking up producao
-    :type ano_search_string: int
+    :type ano_search_string: str
 
     :rtype: List[ProducaoItem]
     """

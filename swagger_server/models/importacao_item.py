@@ -14,7 +14,7 @@ class ImportacaoItem(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, pais: str=None, ano: int=None, quantidade: str=None):  # noqa: E501
+    def __init__(self, pais: str=None, ano: int=None, quantidade: int=None):  # noqa: E501
         """ImportacaoItem - a model defined in Swagger
 
         :param pais: The pais of this ImportacaoItem.  # noqa: E501
@@ -22,12 +22,12 @@ class ImportacaoItem(Model):
         :param ano: The ano of this ImportacaoItem.  # noqa: E501
         :type ano: int
         :param quantidade: The quantidade of this ImportacaoItem.  # noqa: E501
-        :type quantidade: str
+        :type quantidade: int
         """
         self.swagger_types = {
             'pais': str,
             'ano': int,
-            'quantidade': str
+            'quantidade': int
         }
 
         self.attribute_map = {
@@ -97,22 +97,22 @@ class ImportacaoItem(Model):
         self._ano = ano
 
     @property
-    def quantidade(self) -> str:
+    def quantidade(self) -> int:
         """Gets the quantidade of this ImportacaoItem.
 
 
         :return: The quantidade of this ImportacaoItem.
-        :rtype: str
+        :rtype: int
         """
         return self._quantidade
 
     @quantidade.setter
-    def quantidade(self, quantidade: str):
+    def quantidade(self, quantidade: int):
         """Sets the quantidade of this ImportacaoItem.
 
 
         :param quantidade: The quantidade of this ImportacaoItem.
-        :type quantidade: str
+        :type quantidade: int
         """
         if quantidade is None:
             raise ValueError("Invalid value for `quantidade`, must not be `None`")  # noqa: E501

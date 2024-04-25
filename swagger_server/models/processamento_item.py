@@ -14,7 +14,7 @@ class ProcessamentoItem(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, categoria: str=None, cultivar: str=None, ano: str=None, quantidade: str=None):  # noqa: E501
+    def __init__(self, categoria: str=None, cultivar: str=None, ano: int=None, quantidade: int=None):  # noqa: E501
         """ProcessamentoItem - a model defined in Swagger
 
         :param categoria: The categoria of this ProcessamentoItem.  # noqa: E501
@@ -22,15 +22,15 @@ class ProcessamentoItem(Model):
         :param cultivar: The cultivar of this ProcessamentoItem.  # noqa: E501
         :type cultivar: str
         :param ano: The ano of this ProcessamentoItem.  # noqa: E501
-        :type ano: str
+        :type ano: int
         :param quantidade: The quantidade of this ProcessamentoItem.  # noqa: E501
-        :type quantidade: str
+        :type quantidade: int
         """
         self.swagger_types = {
             'categoria': str,
             'cultivar': str,
-            'ano': str,
-            'quantidade': str
+            'ano': int,
+            'quantidade': int
         }
 
         self.attribute_map = {
@@ -102,22 +102,22 @@ class ProcessamentoItem(Model):
         self._cultivar = cultivar
 
     @property
-    def ano(self) -> str:
+    def ano(self) -> int:
         """Gets the ano of this ProcessamentoItem.
 
 
         :return: The ano of this ProcessamentoItem.
-        :rtype: str
+        :rtype: int
         """
         return self._ano
 
     @ano.setter
-    def ano(self, ano: str):
+    def ano(self, ano: int):
         """Sets the ano of this ProcessamentoItem.
 
 
         :param ano: The ano of this ProcessamentoItem.
-        :type ano: str
+        :type ano: int
         """
         if ano is None:
             raise ValueError("Invalid value for `ano`, must not be `None`")  # noqa: E501
@@ -125,22 +125,22 @@ class ProcessamentoItem(Model):
         self._ano = ano
 
     @property
-    def quantidade(self) -> str:
+    def quantidade(self) -> int:
         """Gets the quantidade of this ProcessamentoItem.
 
 
         :return: The quantidade of this ProcessamentoItem.
-        :rtype: str
+        :rtype: int
         """
         return self._quantidade
 
     @quantidade.setter
-    def quantidade(self, quantidade: str):
+    def quantidade(self, quantidade: int):
         """Sets the quantidade of this ProcessamentoItem.
 
 
         :param quantidade: The quantidade of this ProcessamentoItem.
-        :type quantidade: str
+        :type quantidade: int
         """
         if quantidade is None:
             raise ValueError("Invalid value for `quantidade`, must not be `None`")  # noqa: E501

@@ -34,7 +34,7 @@ paths:
         style: form
         explode: true
         schema:
-          type: integer
+          type: string
       responses:
         "200":
           description: search results matching criteria
@@ -79,7 +79,7 @@ paths:
         style: form
         explode: true
         schema:
-          type: integer
+          type: string
       responses:
         "200":
           description: search results matching criteria
@@ -116,7 +116,7 @@ paths:
         style: form
         explode: true
         schema:
-          type: integer
+          type: string
       responses:
         "200":
           description: search results matching criteria
@@ -161,7 +161,7 @@ paths:
         style: form
         explode: true
         schema:
-          type: integer
+          type: string
       responses:
         "200":
           description: search results matching criteria
@@ -206,7 +206,7 @@ paths:
         style: form
         explode: true
         schema:
-          type: integer
+          type: string
       responses:
         "200":
           description: search results matching criteria
@@ -234,16 +234,16 @@ components:
           example: VINHO DE MESA
         ano:
           type: integer
-          format: year
+          format: int32
           example: 1970
         quantidade:
-          type: string
-          format: integer
-          example: "217208604"
+          type: integer
+          format: int32
+          example: 217208604
       example:
         ano: 1970
         produto: VINHO DE MESA
-        quantidade: "217208604"
+        quantidade: 217208604
     ProcessamentoItem:
       required:
       - ano
@@ -259,18 +259,18 @@ components:
           type: string
           example: Carmenere
         ano:
-          type: string
-          format: integer
-          example: "1970"
+          type: integer
+          format: int32
+          example: 1970
         quantidade:
-          type: string
-          format: integer
-          example: "1235"
+          type: integer
+          format: int32
+          example: 1235
       example:
-        ano: "1970"
+        ano: 1970
         cultivar: Carmenere
         categoria: TINTAS
-        quantidade: "1235"
+        quantidade: 1235
     ComercializacaoItem:
       required:
       - ano
@@ -287,17 +287,17 @@ components:
           example: Tinto
         ano:
           type: integer
-          format: year
+          format: int32
           example: 1970
         quantidade:
-          type: string
-          format: integer
-          example: "83300735"
+          type: integer
+          format: int32
+          example: 83300735
       example:
         ano: 1970
         cultivar: Tinto
         categoria: VINHO DE MESA
-        quantidade: "83300735"
+        quantidade: 83300735
     ImportacaoItem:
       required:
       - ano
@@ -310,15 +310,15 @@ components:
           example: Chile
         ano:
           type: integer
-          format: year
+          format: int32
           example: 1970
         quantidade:
-          type: string
-          format: integer
-          example: "162370"
+          type: integer
+          format: int32
+          example: 162370
       example:
         ano: 1970
-        quantidade: "162370"
+        quantidade: 162370
         pais: Chile
     ExportacaoItem:
       required:
@@ -332,14 +332,14 @@ components:
           example: Estados Unidos
         ano:
           type: integer
-          format: year
+          format: int32
           example: 1970
         quantidade:
-          type: string
-          format: integer
-          example: "11200"
+          type: integer
+          format: int32
+          example: 11200
       example:
         ano: 1970
-        quantidade: "11200"
+        quantidade: 11200
         pais: Estados Unidos
 

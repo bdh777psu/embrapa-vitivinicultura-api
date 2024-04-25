@@ -22,7 +22,7 @@ class TestDefaultController(BaseTestCase):
         searches comercializacao
         """
         query_string = [('produto_search_string', 'produto_search_string_example'),
-                        ('ano_search_string', 56)]
+                        ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/comercializacao',
             method='GET',
@@ -37,7 +37,7 @@ class TestDefaultController(BaseTestCase):
         """
         query_string = [('processamento_category_search_string', 'processamento_category_search_string_example'),
                         ('processamento_product_search_string', 'processamento_product_search_string_example'),
-                        ('ano_search_string', 56)]
+                        ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/exportacao',
             method='GET',
@@ -52,7 +52,7 @@ class TestDefaultController(BaseTestCase):
         """
         query_string = [('processamento_category_search_string', 'processamento_category_search_string_example'),
                         ('processamento_product_search_string', 'processamento_product_search_string_example'),
-                        ('ano_search_string', 56)]
+                        ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/importacao',
             method='GET',
@@ -67,7 +67,7 @@ class TestDefaultController(BaseTestCase):
         """
         query_string = [('processamento_category_search_string', 'processamento_category_search_string_example'),
                         ('processamento_product_search_string', 'processamento_product_search_string_example'),
-                        ('ano_search_string', 56)]
+                        ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/processamento',
             method='GET',
@@ -81,7 +81,7 @@ class TestDefaultController(BaseTestCase):
         searches producao
         """
         query_string = [('produto_search_string', 'produto_search_string_example'),
-                        ('ano_search_string', 56)]
+                        ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/producao',
             method='GET',
