@@ -1,5 +1,6 @@
 import connexion
 import six
+import pandas as pd
 
 from swagger_server.models.comercializacao_item import ComercializacaoItem  # noqa: E501
 from swagger_server.models.exportacao_item import ExportacaoItem  # noqa: E501
@@ -87,4 +88,32 @@ def search_producao(produto_search_string, ano_search_string=None):  # noqa: E50
 
     :rtype: List[ProducaoItem]
     """
-    return 'do some magic!'
+
+    result = []
+
+    data = pd.read_csv('data/producao.csv', sep=';')
+    
+    all_product_info = data[data['produto'] == produto_search_string]
+
+    if ano_search_string is None:
+        for index, year in enumerate(all_product_info):
+            if index >= 2:
+                quantity = all_product_info[year].values[0]
+
+                product_info = ProducaoItem(produto=produto_search_string,
+                                    ano=int(year),
+                                    quantidade=int(quantity)
+                                    ).to_dict()
+
+                result.append(product_info)
+    else:
+        quantity = all_product_info[ano_search_string].values[0]
+
+        product_info = ProducaoItem(produto=produto_search_string,
+                                    ano=ano_search_string,
+                                    quantidade=int(quantity)
+                                    ).to_dict()
+
+        result.append(product_info)
+
+    return result
