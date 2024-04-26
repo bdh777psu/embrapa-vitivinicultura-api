@@ -311,6 +311,7 @@ components:
       - ano
       - pais
       - quantidade
+      - valor
       type: object
       properties:
         pais:
@@ -324,8 +325,13 @@ components:
           type: integer
           format: int32
           example: 162370
+        valor:
+          type: integer
+          format: int32
+          example: 101819
       example:
         ano: 1970
+        valor: 101819
         quantidade: 162370
         pais: Chile
     ExportacaoItem:
@@ -333,6 +339,7 @@ components:
       - ano
       - pais
       - quantidade
+      - valor
       type: object
       properties:
         pais:
@@ -346,8 +353,13 @@ components:
           type: integer
           format: int32
           example: 11200
+        valor:
+          type: integer
+          format: int32
+          example: 4200
       example:
         ano: 1970
+        valor: 4200
         quantidade: 11200
         pais: Estados Unidos
 

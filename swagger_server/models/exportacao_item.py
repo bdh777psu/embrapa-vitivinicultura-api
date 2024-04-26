@@ -14,7 +14,7 @@ class ExportacaoItem(Model):
 
     Do not edit the class manually.
     """
-    def __init__(self, pais: str=None, ano: int=None, quantidade: int=None):  # noqa: E501
+    def __init__(self, pais: str=None, ano: int=None, quantidade: int=None, valor: int=None):  # noqa: E501
         """ExportacaoItem - a model defined in Swagger
 
         :param pais: The pais of this ExportacaoItem.  # noqa: E501
@@ -23,21 +23,26 @@ class ExportacaoItem(Model):
         :type ano: int
         :param quantidade: The quantidade of this ExportacaoItem.  # noqa: E501
         :type quantidade: int
+        :param valor: The valor of this ExportacaoItem.  # noqa: E501
+        :type valor: int
         """
         self.swagger_types = {
             'pais': str,
             'ano': int,
-            'quantidade': int
+            'quantidade': int,
+            'valor': int
         }
 
         self.attribute_map = {
             'pais': 'pais',
             'ano': 'ano',
-            'quantidade': 'quantidade'
+            'quantidade': 'quantidade',
+            'valor': 'valor'
         }
         self._pais = pais
         self._ano = ano
         self._quantidade = quantidade
+        self._valor = valor
 
     @classmethod
     def from_dict(cls, dikt) -> 'ExportacaoItem':
@@ -118,3 +123,26 @@ class ExportacaoItem(Model):
             raise ValueError("Invalid value for `quantidade`, must not be `None`")  # noqa: E501
 
         self._quantidade = quantidade
+
+    @property
+    def valor(self) -> int:
+        """Gets the valor of this ExportacaoItem.
+
+
+        :return: The valor of this ExportacaoItem.
+        :rtype: int
+        """
+        return self._valor
+
+    @valor.setter
+    def valor(self, valor: int):
+        """Sets the valor of this ExportacaoItem.
+
+
+        :param valor: The valor of this ExportacaoItem.
+        :type valor: int
+        """
+        if valor is None:
+            raise ValueError("Invalid value for `valor`, must not be `None`")  # noqa: E501
+
+        self._valor = valor
