@@ -75,7 +75,76 @@ def search_processamento(processamento_category_search_string, processamento_pro
 
     :rtype: List[ProcessamentoItem]
     """
-    return 'do some magic!'
+
+    result = []
+
+    data = pd.read_csv('data/ProcessaViniferas.csv', sep='\t')
+    
+    all_category_info = data[data['control'] == processamento_category_search_string]
+
+    prefix = 'ti_' if processamento_category_search_string == 'TINTAS' else 'br_'
+
+    if processamento_product_search_string is None and ano_search_string is None:
+        for index, year in enumerate(all_category_info):
+            if index >= 3:
+                crop = all_category_info['cultivar'].values[0]
+                quantity = all_category_info[year].values[0]
+
+                if isinstance(quantity, str) == True:
+                    continue
+                else:
+                    product_info = ProcessamentoItem(categoria=processamento_category_search_string,
+                                                     cultivar=crop,
+                                                     ano=int(year),
+                                                     quantidade=int(quantity)
+                                                     ).to_dict()
+
+                    result.append(product_info)
+    elif processamento_product_search_string is None and ano_search_string is not None:
+        crop = all_category_info['cultivar'].values[0]
+        quantity = all_category_info[ano_search_string].values[0]
+
+        product_info = ProcessamentoItem(categoria=processamento_category_search_string,
+                                             cultivar=crop,
+                                             ano=ano_search_string,
+                                             quantidade=int(quantity)
+                                             ).to_dict()
+
+        result.append(product_info)
+        
+    elif processamento_product_search_string is not None and ano_search_string is None:
+        all_category_info = data[data['control'] == prefix + processamento_product_search_string]
+
+        for index, year in enumerate(all_category_info):
+            if index >= 3:
+                crop = all_category_info['cultivar'].values[0]
+                quantity = all_category_info[year].values[0]
+
+                if isinstance(quantity, str) == True:
+                    continue
+                else:
+                    product_info = ProcessamentoItem(categoria=processamento_category_search_string,
+                                                     cultivar=crop,
+                                                     ano=int(year),
+                                                     quantidade=int(quantity)
+                                                     ).to_dict()
+
+                    result.append(product_info)
+
+    elif processamento_product_search_string is not None and ano_search_string is not None:
+        all_category_info = data[data['control'] == prefix + processamento_product_search_string]
+        crop = all_category_info['cultivar'].values[0]
+        quantity = all_category_info[ano_search_string].values[0]
+
+        product_info = ProcessamentoItem(categoria=processamento_category_search_string,
+                                             cultivar=crop,
+                                             ano=ano_search_string,
+                                             quantidade=int(quantity)
+                                             ).to_dict()
+
+        result.append(product_info)
+
+    return result
 
 
 def search_producao(produto_search_string, ano_search_string=None):  # noqa: E501
@@ -93,7 +162,7 @@ def search_producao(produto_search_string, ano_search_string=None):  # noqa: E50
 
     result = []
 
-    data = pd.read_csv('data/producao.csv', sep=';')
+    data = pd.read_csv('data/Producao.csv', sep=';')
     
     all_product_info = data[data['produto'] == produto_search_string]
 
