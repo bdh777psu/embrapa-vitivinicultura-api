@@ -10,13 +10,15 @@ from swagger_server.models.producao_item import ProducaoItem  # noqa: E501
 from swagger_server import util
 
 
-def search_comercializacao(produto_search_string, ano_search_string=None):  # noqa: E501
+def search_comercializacao(comercializacao_category_search_string, comercializacao_product_search_string=None, ano_search_string=None):  # noqa: E501
     """searches comercializacao
 
     By passing in the appropriate options, you can search for available comercializacao info in the system  # noqa: E501
 
-    :param produto_search_string: pass a product name search string for looking up comercializacao
-    :type produto_search_string: str
+    :param comercializacao_category_search_string: pass a category name search string for looking up comercializacao
+    :type comercializacao_category_search_string: str
+    :param comercializacao_product_search_string: pass a product name search string for looking up comercializacao
+    :type comercializacao_product_search_string: str
     :param ano_search_string: pass a year search string for looking up comercializacao
     :type ano_search_string: str
 
@@ -25,15 +27,15 @@ def search_comercializacao(produto_search_string, ano_search_string=None):  # no
     return 'do some magic!'
 
 
-def search_exportacao(processamento_category_search_string, processamento_product_search_string=None, ano_search_string=None):  # noqa: E501
+def search_exportacao(exportacao_category_search_string, exportacao_product_search_string=None, ano_search_string=None):  # noqa: E501
     """searches exportacao
 
     By passing in the appropriate options, you can search for available exportacao info in the system  # noqa: E501
 
-    :param processamento_category_search_string: pass a category name search string for looking up exportacao
-    :type processamento_category_search_string: str
-    :param processamento_product_search_string: pass a product name search string for looking up exportacao
-    :type processamento_product_search_string: str
+    :param exportacao_category_search_string: pass a category name search string for looking up exportacao
+    :type exportacao_category_search_string: str
+    :param exportacao_product_search_string: pass a product name search string for looking up exportacao
+    :type exportacao_product_search_string: str
     :param ano_search_string: pass a year search string for looking up exportacao
     :type ano_search_string: str
 
@@ -42,15 +44,15 @@ def search_exportacao(processamento_category_search_string, processamento_produc
     return 'do some magic!'
 
 
-def search_importacao(processamento_category_search_string, processamento_product_search_string=None, ano_search_string=None):  # noqa: E501
+def search_importacao(importacao_category_search_string, importacao_product_search_string=None, ano_search_string=None):  # noqa: E501
     """searches importacao
 
     By passing in the appropriate options, you can search for available importacao info in the system  # noqa: E501
 
-    :param processamento_category_search_string: pass a category name search string for looking up importacao
-    :type processamento_category_search_string: str
-    :param processamento_product_search_string: pass a product name search string for looking up importacao
-    :type processamento_product_search_string: str
+    :param importacao_category_search_string: pass a category name search string for looking up importacao
+    :type importacao_category_search_string: str
+    :param importacao_product_search_string: pass a product name search string for looking up importacao
+    :type importacao_product_search_string: str
     :param ano_search_string: pass a year search string for looking up importacao
     :type ano_search_string: str
 

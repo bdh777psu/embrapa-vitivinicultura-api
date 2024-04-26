@@ -21,7 +21,8 @@ class TestDefaultController(BaseTestCase):
 
         searches comercializacao
         """
-        query_string = [('produto_search_string', 'produto_search_string_example'),
+        query_string = [('comercializacao_category_search_string', 'comercializacao_category_search_string_example'),
+                        ('comercializacao_product_search_string', 'comercializacao_product_search_string_example'),
                         ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/comercializacao',
@@ -35,8 +36,8 @@ class TestDefaultController(BaseTestCase):
 
         searches exportacao
         """
-        query_string = [('processamento_category_search_string', 'processamento_category_search_string_example'),
-                        ('processamento_product_search_string', 'processamento_product_search_string_example'),
+        query_string = [('exportacao_category_search_string', 'exportacao_category_search_string_example'),
+                        ('exportacao_product_search_string', 'exportacao_product_search_string_example'),
                         ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/exportacao',
@@ -50,8 +51,8 @@ class TestDefaultController(BaseTestCase):
 
         searches importacao
         """
-        query_string = [('processamento_category_search_string', 'processamento_category_search_string_example'),
-                        ('processamento_product_search_string', 'processamento_product_search_string_example'),
+        query_string = [('importacao_category_search_string', 'importacao_category_search_string_example'),
+                        ('importacao_product_search_string', 'importacao_product_search_string_example'),
                         ('ano_search_string', 'ano_search_string_example')]
         response = self.client.open(
             '/importacao',
