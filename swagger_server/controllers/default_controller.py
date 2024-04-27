@@ -41,7 +41,51 @@ def search_exportacao(exportacao_category_search_string, exportacao_country_sear
 
     :rtype: List[ExportacaoItem]
     """
-    return 'do some magic!'
+
+    result = []
+
+    match exportacao_category_search_string:
+        case 'Vinhos de mesa':
+            data = pd.read_csv('data/Exp/ExpVinho.csv', sep=';')
+        case 'Espumantes':
+            data = pd.read_csv('data/Exp/ExpEspumantes.csv', sep=';')
+        case 'Uvas frescas':
+            data = pd.read_csv('data/Exp/ExpUva.csv', sep=';')
+        case 'Suco de uva':
+            data = pd.read_csv('data/Exp/ExpSuco.csv', sep=';')
+
+    all_country_info = data[data['País'] == exportacao_country_search_string]
+
+    if ano_search_string is None:
+        for index, year in enumerate(all_country_info):
+            if index >= 2:
+                if ".1" not in year:
+                    quantity = all_country_info[year].values[0]
+                    value = all_country_info[year + '.1'].values[0]
+
+                    country_info = ImportacaoItem(pais=exportacao_country_search_string,
+                                    ano=int(year),
+                                    quantidade=int(quantity),
+                                    valor=int(value)
+                                    ).to_dict()
+
+                    result.append(country_info)
+    else:
+        quantity = all_country_info[ano_search_string].values[0]
+        
+        if ".1" not in ano_search_string:
+            quantity = all_country_info[ano_search_string].values[0]
+            value = all_country_info[ano_search_string + '.1'].values[0]
+
+            country_info = ImportacaoItem(pais=exportacao_country_search_string,
+                                    ano=int(ano_search_string),
+                                    quantidade=int(quantity),
+                                    valor=int(value)
+                                    ).to_dict()
+
+            result.append(country_info)
+
+    return result
 
 
 def search_importacao(importacao_category_search_string, importacao_country_search_string, ano_search_string=None):  # noqa: E501
@@ -77,7 +121,6 @@ def search_importacao(importacao_category_search_string, importacao_country_sear
 
     if ano_search_string is None:
         for index, year in enumerate(all_country_info):
-
             if index >= 2:
                 if ".1" not in year:
                     quantity = all_country_info[year].values[0]
@@ -205,7 +248,7 @@ def search_producao(produto_search_string, ano_search_string=None):  # noqa: E50
         quantity = all_product_info[ano_search_string].values[0]
 
         product_info = ProducaoItem(produto=produto_search_string,
-                                    ano=ano_search_string,
+                                    ano=int(ano_search_string),
                                     quantidade=int(quantity)
                                     ).to_dict()
 
