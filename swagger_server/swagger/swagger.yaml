@@ -67,7 +67,7 @@ paths:
       - name: Processamento_product_search_String
         in: query
         description: pass a product name search string for looking up processamento
-        required: false
+        required: true
         style: form
         explode: true
         schema:
@@ -356,10 +356,10 @@ components:
         valor:
           type: integer
           format: int32
-          example: 4200
+          example: 11200
       example:
         ano: 1970
-        valor: 4200
+        valor: 11200
         quantidade: 11200
         pais: Estados Unidos
 
