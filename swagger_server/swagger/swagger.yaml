@@ -154,10 +154,10 @@ paths:
         explode: true
         schema:
           type: string
-      - name: Importacao_product_search_String
+      - name: Importacao_country_search_String
         in: query
-        description: pass a product name search string for looking up importacao
-        required: false
+        description: pass a country name search string for looking up importacao
+        required: true
         style: form
         explode: true
         schema:
@@ -199,10 +199,10 @@ paths:
         explode: true
         schema:
           type: string
-      - name: Exportacao_product_search_String
+      - name: Exportacao_country_search_String
         in: query
-        description: pass a product name search string for looking up exportacao
-        required: false
+        description: pass a country name search string for looking up exportacao
+        required: true
         style: form
         explode: true
         schema:

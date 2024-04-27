@@ -27,15 +27,15 @@ def search_comercializacao(comercializacao_category_search_string, comercializac
     return 'do some magic!'
 
 
-def search_exportacao(exportacao_category_search_string, exportacao_product_search_string=None, ano_search_string=None):  # noqa: E501
+def search_exportacao(exportacao_category_search_string, exportacao_country_search_string, ano_search_string=None):  # noqa: E501
     """searches exportacao
 
     By passing in the appropriate options, you can search for available exportacao info in the system  # noqa: E501
 
     :param exportacao_category_search_string: pass a category name search string for looking up exportacao
     :type exportacao_category_search_string: str
-    :param exportacao_product_search_string: pass a product name search string for looking up exportacao
-    :type exportacao_product_search_string: str
+    :param exportacao_country_search_string: pass a country name search string for looking up exportacao
+    :type exportacao_country_search_string: str
     :param ano_search_string: pass a year search string for looking up exportacao
     :type ano_search_string: str
 
@@ -44,21 +44,68 @@ def search_exportacao(exportacao_category_search_string, exportacao_product_sear
     return 'do some magic!'
 
 
-def search_importacao(importacao_category_search_string, importacao_product_search_string=None, ano_search_string=None):  # noqa: E501
+def search_importacao(importacao_category_search_string, importacao_country_search_string, ano_search_string=None):  # noqa: E501
     """searches importacao
 
     By passing in the appropriate options, you can search for available importacao info in the system  # noqa: E501
 
     :param importacao_category_search_string: pass a category name search string for looking up importacao
     :type importacao_category_search_string: str
-    :param importacao_product_search_string: pass a product name search string for looking up importacao
-    :type importacao_product_search_string: str
+    :param importacao_country_search_string: pass a country name search string for looking up importacao
+    :type importacao_country_search_string: str
     :param ano_search_string: pass a year search string for looking up importacao
     :type ano_search_string: str
 
     :rtype: List[ImportacaoItem]
     """
-    return 'do some magic!'
+
+    result = []
+
+    match importacao_category_search_string:
+        case 'Vinhos de mesa':
+            data = pd.read_csv('data/Imp/ImpVinhos.csv', sep=';')
+        case 'Espumantes':
+            data = pd.read_csv('data/Imp/ImpEspumantes.csv', sep=';')
+        case 'Uvas frescas':
+            data = pd.read_csv('data/Imp/Frescas.csv', sep=';')
+        case 'Uvas passas':
+            data = pd.read_csv('data/Imp/ImpPassas.csv', sep=';')
+        case 'Suco de uva':
+            data = pd.read_csv('data/Imp/ImpSuco.csv', sep=';')
+
+    all_country_info = data[data['País'] == importacao_country_search_string]
+
+    if ano_search_string is None:
+        for index, year in enumerate(all_country_info):
+
+            if index >= 2:
+                if ".1" not in year:
+                    quantity = all_country_info[year].values[0]
+                    value = all_country_info[year + '.1'].values[0]
+
+                    country_info = ImportacaoItem(pais=importacao_country_search_string,
+                                    ano=int(year),
+                                    quantidade=int(quantity),
+                                    valor=int(value)
+                                    ).to_dict()
+
+                    result.append(country_info)
+    else:
+        quantity = all_country_info[ano_search_string].values[0]
+        
+        if ".1" not in ano_search_string:
+            quantity = all_country_info[ano_search_string].values[0]
+            value = all_country_info[ano_search_string + '.1'].values[0]
+
+            country_info = ImportacaoItem(pais=importacao_country_search_string,
+                                    ano=ano_search_string,
+                                    quantidade=int(quantity),
+                                    valor=int(value)
+                                    ).to_dict()
+
+            result.append(country_info)
+
+    return result
 
 
 def search_processamento(processamento_category_search_string, processamento_product_search_string=None, ano_search_string=None):  # noqa: E501
