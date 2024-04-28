@@ -10,7 +10,7 @@ from swagger_server.models.producao_item import ProducaoItem  # noqa: E501
 from swagger_server import util
 
 
-def search_comercializacao(comercializacao_category_search_string, comercializacao_product_search_string=None, ano_search_string=None):  # noqa: E501
+def search_comercializacao(comercializacao_product_search_string, ano_search_string=None):  # noqa: E501
     """searches comercializacao
 
     By passing in the appropriate options, you can search for available comercializacao info in the system  # noqa: E501
@@ -24,7 +24,39 @@ def search_comercializacao(comercializacao_category_search_string, comercializac
 
     :rtype: List[ComercializacaoItem]
     """
-    return 'do some magic!'
+
+    result = []
+
+    data = pd.read_csv('data/Comercio.csv', skipinitialspace=True, sep=';')
+    
+    all_product_info = data[data['Produto'] == comercializacao_product_search_string]
+
+    if ano_search_string is None:
+        for index, year in enumerate(all_product_info):
+            if index >= 3:
+                category = all_product_info['Categoria'].values[0]
+                quantity = all_product_info[year].values[0]
+
+                product_info = ComercializacaoItem(categoria=category,
+                                    cultivar=comercializacao_product_search_string,
+                                    ano=int(year),
+                                    quantidade=int(quantity)
+                                    ).to_dict()
+
+                result.append(product_info)
+    else:
+        category = all_product_info['Categoria'].values[0]
+        quantity = all_product_info[ano_search_string].values[0]
+        
+        product_info = ComercializacaoItem(categoria=category,
+                                    cultivar=comercializacao_product_search_string,
+                                    ano=int(ano_search_string),
+                                    quantidade=int(quantity)
+                                    ).to_dict()
+
+        result.append(product_info)
+
+    return result
 
 
 def search_exportacao(exportacao_category_search_string, exportacao_country_search_string, ano_search_string=None):  # noqa: E501
@@ -63,7 +95,7 @@ def search_exportacao(exportacao_category_search_string, exportacao_country_sear
                     quantity = all_country_info[year].values[0]
                     value = all_country_info[year + '.1'].values[0]
 
-                    country_info = ImportacaoItem(pais=exportacao_country_search_string,
+                    country_info = ExportacaoItem(pais=exportacao_country_search_string,
                                     ano=int(year),
                                     quantidade=int(quantity),
                                     valor=int(value)
@@ -77,7 +109,7 @@ def search_exportacao(exportacao_category_search_string, exportacao_country_sear
             quantity = all_country_info[ano_search_string].values[0]
             value = all_country_info[ano_search_string + '.1'].values[0]
 
-            country_info = ImportacaoItem(pais=exportacao_country_search_string,
+            country_info = ExportacaoItem(pais=exportacao_country_search_string,
                                     ano=int(ano_search_string),
                                     quantidade=int(quantity),
                                     valor=int(value)
