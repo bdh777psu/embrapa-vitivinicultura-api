@@ -28,8 +28,8 @@ Python 3.10+
 To run the server, please execute the following from the root directory:
 
 ```
-pip3 install -r requirements.txt
-python3 -m swagger_server
+pip install -r requirements.txt
+python -m swagger_server
 ```
 
 and open your browser to here:
