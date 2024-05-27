@@ -3,6 +3,7 @@ FROM python:3.10-slim
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+ENV PORT 8080
 ENV HOST 0.0.0.0
 
 COPY requirements.txt /usr/src/app/
