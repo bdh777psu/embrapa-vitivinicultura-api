@@ -1,6 +1,6 @@
 # EMBRAPA - Dados da Vitivinicultura
 ## This is a simple API for a FIAP - Tech Challenge (Pós-tech Machine Learning Engineering)
-Currently hosted on Google Cloud Run (built on repo push) at: https://embrapa-vitivinicultura-api-atuc6xwo4q-rj.a.run.app/ui/
+Currently hosted on Google Cloud Run (built & deployed on repo push) at: https://embrapa-vitivinicultura-api-atuc6xwo4q-rj.a.run.app/ui/
 
 
 "Estamos apresentado informações referentes à quantidade de uvas processadas, produção e comercialização de vinhos, suco e derivados provenientes do Estado do Rio Grande do Sul, que representa mais de 90% da produção nacional. Apresentamos também os dados de importações e exportações dos produtos da vitivinicultura.
