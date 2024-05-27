@@ -13,23 +13,23 @@ servers:
 paths:
   /producao:
     get:
-      summary: searches producao
+      summary: searches Producao
       description: |
         By passing in the appropriate options, you can search for
-        available producao info in the system
+        available Producao info in the system
       operationId: search_producao
       parameters:
-      - name: Produto_search_String
+      - name: produto
         in: query
-        description: pass a product name search string for looking up producao
+        description: search for a product name
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Ano_search_String
+      - name: ano
         in: query
-        description: pass a year search string for looking up producao
+        description: search for a specific year
         required: false
         style: form
         explode: true
@@ -50,31 +50,32 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.default_controller
   /processamento:
     get:
-      summary: searches processamento
+      summary: searches Processamento
       description: |
         By passing in the appropriate options, you can search for
-        available processamento info in the system
+        available Processamento info in the system
       operationId: search_processamento
       parameters:
-      - name: Processamento_category_search_String
+      - name: categoria
         in: query
-        description: pass a category name search string for looking up processamento
+        description: "search within a category (Viniferas, Americanas e Hibridas,\
+          \ Uvas de mesa, or Sem classificacao)"
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Processamento_product_search_String
+      - name: cultivar
         in: query
-        description: pass a product name search string for looking up processamento
+        description: search for a cultivar name
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Ano_search_String
+      - name: ano
         in: query
-        description: pass a year search string for looking up processamento
+        description: search for a specific year
         required: false
         style: form
         explode: true
@@ -95,23 +96,23 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.default_controller
   /comercializacao:
     get:
-      summary: searches comercializacao
+      summary: searches Comercializacao
       description: |
         By passing in the appropriate options, you can search for
-        available comercializacao info in the system
+        available Comercializacao info in the system
       operationId: search_comercializacao
       parameters:
-      - name: Comercializacao_product_search_String
+      - name: produto
         in: query
-        description: pass a product name search string for looking up comercializacao
+        description: search for a product name
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Ano_search_String
+      - name: ano
         in: query
-        description: pass a year search string for looking up comercializacao
+        description: search for a specific year
         required: false
         style: form
         explode: true
@@ -132,31 +133,32 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.default_controller
   /importacao:
     get:
-      summary: searches importacao
+      summary: searches Importacao
       description: |
         By passing in the appropriate options, you can search for
-        available importacao info in the system
+        available Importacao info in the system
       operationId: search_importacao
       parameters:
-      - name: Importacao_category_search_String
+      - name: categoria
         in: query
-        description: pass a category name search string for looking up importacao
+        description: "search within a category (Vinhos de mesa, Espumantes, Uvas frescas,\
+          \ or Suco de uva)"
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Importacao_country_search_String
+      - name: pais
         in: query
-        description: pass a country name search string for looking up importacao
+        description: search for a country name
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Ano_search_String
+      - name: ano
         in: query
-        description: pass a year search string for looking up importacao
+        description: search for a specific year
         required: false
         style: form
         explode: true
@@ -177,31 +179,32 @@ paths:
       x-openapi-router-controller: swagger_server.controllers.default_controller
   /exportacao:
     get:
-      summary: searches exportacao
+      summary: searches Exportacao
       description: |
         By passing in the appropriate options, you can search for
-        available exportacao info in the system
+        available Exportacao info in the system
       operationId: search_exportacao
       parameters:
-      - name: Exportacao_category_search_String
+      - name: categoria
         in: query
-        description: pass a category name search string for looking up exportacao
+        description: "search within a category (Vinhos de mesa, Espumantes, Uvas frescas,\
+          \ or Suco de uva)"
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Exportacao_country_search_String
+      - name: pais
         in: query
-        description: pass a country name search string for looking up exportacao
+        description: search for a country name
         required: true
         style: form
         explode: true
         schema:
           type: string
-      - name: Ano_search_String
+      - name: ano
         in: query
-        description: pass a year search string for looking up exportacao
+        description: search for a specific year
         required: false
         style: form
         explode: true
@@ -254,7 +257,7 @@ components:
       properties:
         categoria:
           type: string
-          example: TINTAS
+          example: Viniferas
         cultivar:
           type: string
           example: Carmenere
@@ -269,7 +272,7 @@ components:
       example:
         ano: 1970
         cultivar: Carmenere
-        categoria: TINTAS
+        categoria: Viniferas
         quantidade: 1235
     ComercializacaoItem:
       required:

@@ -13,30 +13,32 @@ from swagger_server import util
 
 
 def download_csv(url):
-    response = requests.get(url)
-    
-    if response.status_code == 200:
-        file_name = url.split('/')[-1]
-        save_path = os.path.join("data/", file_name)
+    file_name = url.split('/')[-1]
+    save_path = os.path.join("data/", file_name)
 
-        with open(save_path, 'wb') as file:
-            file.write(response.content)
-    
-        return save_path
+    if os.path.exists(save_path):
+        print(f"File already present at: {save_path}")
     else:
-        print("Error: " + str(response.status_code))
+        response = requests.get(url)
 
-def search_comercializacao(comercializacao_product_search_string, ano_search_string=None):  # noqa: E501
-    """searches comercializacao
+        if response.status_code == 200:
+            with open(save_path, 'wb') as file:
+                file.write(response.content)
+        else:
+            print("Error: " + str(response.status_code))
 
-    By passing in the appropriate options, you can search for available comercializacao info in the system  # noqa: E501
+    return save_path
 
-    :param comercializacao_category_search_string: pass a category name search string for looking up comercializacao
-    :type comercializacao_category_search_string: str
-    :param comercializacao_product_search_string: pass a product name search string for looking up comercializacao
-    :type comercializacao_product_search_string: str
-    :param ano_search_string: pass a year search string for looking up comercializacao
-    :type ano_search_string: str
+
+def search_comercializacao(produto, ano=None):  # noqa: E501
+    """searches Comercializacao
+
+    By passing in the appropriate options, you can search for available Comercializacao info in the system  # noqa: E501
+
+    :param produto: search for a product name
+    :type produto: str
+    :param ano: search for a specific year
+    :type ano: str
 
     :rtype: List[ComercializacaoItem]
     """
@@ -46,16 +48,16 @@ def search_comercializacao(comercializacao_product_search_string, ano_search_str
     file = download_csv("http://vitibrasil.cnpuv.embrapa.br/download/Comercio.csv")
     data = pd.read_csv(file, sep=';')
         
-    all_product_info = data[data['Produto'] == comercializacao_product_search_string]
+    all_product_info = data[data['Produto'] == produto]
 
-    if ano_search_string is None:
+    if ano is None:
         for index, year in enumerate(all_product_info):
             if index >= 3:
                 product = all_product_info['Produto'].values[0]
                 quantity = all_product_info[year].values[0]
 
                 item = ComercializacaoItem(categoria=product,
-                                        cultivar=comercializacao_product_search_string,
+                                        cultivar=produto,
                                         ano=int(year),
                                         quantidade=int(quantity)
                                         ).to_dict()
@@ -63,11 +65,11 @@ def search_comercializacao(comercializacao_product_search_string, ano_search_str
                 result.append(item)
     else:
         product = all_product_info['Produto'].values[0]
-        quantity = all_product_info[ano_search_string].values[0]
+        quantity = all_product_info[ano].values[0]
                 
         item = ComercializacaoItem(categoria=product,
-                                        cultivar=comercializacao_product_search_string,
-                                        ano=int(ano_search_string),
+                                        cultivar=produto,
+                                        ano=int(ano),
                                         quantidade=int(quantity)
                                         ).to_dict()
 
@@ -75,24 +77,24 @@ def search_comercializacao(comercializacao_product_search_string, ano_search_str
     return result
 
 
-def search_exportacao(exportacao_category_search_string, exportacao_country_search_string, ano_search_string=None):  # noqa: E501
-    """searches exportacao
+def search_exportacao(categoria, pais, ano=None):  # noqa: E501
+    """searches Exportacao
 
-    By passing in the appropriate options, you can search for available exportacao info in the system  # noqa: E501
+    By passing in the appropriate options, you can search for available Exportacao info in the system  # noqa: E501
 
-    :param exportacao_category_search_string: pass a category name search string for looking up exportacao
-    :type exportacao_category_search_string: str
-    :param exportacao_country_search_string: pass a country name search string for looking up exportacao
-    :type exportacao_country_search_string: str
-    :param ano_search_string: pass a year search string for looking up exportacao
-    :type ano_search_string: str
+    :param categoria: search within a category (Vinhos de mesa, Espumantes, Uvas frescas, or Suco de uva)
+    :type categoria: str
+    :param pais: search for a country name
+    :type pais: str
+    :param ano: search for a specific year
+    :type ano: str
 
     :rtype: List[ExportacaoItem]
     """
 
     result = []
 
-    match exportacao_category_search_string:
+    match categoria:
         case 'Vinhos de mesa':
             file = download_csv("http://vitibrasil.cnpuv.embrapa.br/download/ExpVinho.csv")
         case 'Espumantes':
@@ -104,16 +106,16 @@ def search_exportacao(exportacao_category_search_string, exportacao_country_sear
             
     data = pd.read_csv(file, sep=';')
 
-    all_country_info = data[data['País'] == exportacao_country_search_string]
+    all_country_info = data[data['País'] == pais]
 
-    if ano_search_string is None:
+    if ano is None:
         for index, year in enumerate(all_country_info):
             if index >= 2:
                 if ".1" not in year:
                     quantity = all_country_info[year].values[0]
                     value = all_country_info[year + '.1'].values[0]
 
-                    item = ExportacaoItem(pais=exportacao_country_search_string,
+                    item = ExportacaoItem(pais=pais,
                                         ano=int(year),
                                         quantidade=int(quantity),
                                         valor=int(value)
@@ -121,14 +123,14 @@ def search_exportacao(exportacao_category_search_string, exportacao_country_sear
 
                     result.append(item)
     else:
-        quantity = all_country_info[ano_search_string].values[0]
+        quantity = all_country_info[ano].values[0]
             
-        if ".1" not in ano_search_string:
-            quantity = all_country_info[ano_search_string].values[0]
-            value = all_country_info[ano_search_string + '.1'].values[0]
+        if ".1" not in ano:
+            quantity = all_country_info[ano].values[0]
+            value = all_country_info[ano + '.1'].values[0]
 
-            item = ExportacaoItem(pais=exportacao_country_search_string,
-                                        ano=int(ano_search_string),
+            item = ExportacaoItem(pais=pais,
+                                        ano=int(ano),
                                         quantidade=int(quantity),
                                         valor=int(value)
                                         ).to_dict()
@@ -137,24 +139,24 @@ def search_exportacao(exportacao_category_search_string, exportacao_country_sear
     return result
 
 
-def search_importacao(importacao_category_search_string, importacao_country_search_string, ano_search_string=None):  # noqa: E501
-    """searches importacao
+def search_importacao(categoria, pais, ano=None):  # noqa: E501
+    """searches Importacao
 
-    By passing in the appropriate options, you can search for available importacao info in the system  # noqa: E501
+    By passing in the appropriate options, you can search for available Importacao info in the system  # noqa: E501
 
-    :param importacao_category_search_string: pass a category name search string for looking up importacao
-    :type importacao_category_search_string: str
-    :param importacao_country_search_string: pass a country name search string for looking up importacao
-    :type importacao_country_search_string: str
-    :param ano_search_string: pass a year search string for looking up importacao
-    :type ano_search_string: str
+    :param categoria: search within a category (Vinhos de mesa, Espumantes, Uvas frescas, or Suco de uva)
+    :type categoria: str
+    :param pais: search for a country name
+    :type pais: str
+    :param ano: search for a specific year
+    :type ano: str
 
     :rtype: List[ImportacaoItem]
     """
 
     result = []
 
-    match importacao_category_search_string:
+    match categoria:
         case 'Vinhos de mesa':
             file = download_csv("http://vitibrasil.cnpuv.embrapa.br/download/ImpVinhos.csv")
         case 'Espumantes':
@@ -168,31 +170,31 @@ def search_importacao(importacao_category_search_string, importacao_country_sear
 
     data = pd.read_csv(file, sep=';')
 
-    all_country_info = data[data['País'] == importacao_country_search_string]
+    all_country_info = data[data['País'] == pais]
     
-    if ano_search_string is None:
-        for index, year in enumerate(all_country_info):
+    if ano is None:
+        for index, ano in enumerate(all_country_info):
             if index >= 2:
-                if ".1" not in year:
-                    quantity = all_country_info[year].values[0]
-                    value = all_country_info[year + '.1'].values[0]
+                if ".1" not in ano:
+                    quantity = all_country_info[ano].values[0]
+                    value = all_country_info[ano + '.1'].values[0]
                     
-                    item = ImportacaoItem(pais=importacao_country_search_string,
-                                        ano=int(year),
+                    item = ImportacaoItem(pais=pais,
+                                        ano=int(ano),
                                         quantidade=int(quantity),
                                         valor=int(value)
                                         ).to_dict()
 
                     result.append(item)
     else:
-        quantity = all_country_info[ano_search_string].values[0]
+        quantity = all_country_info[ano].values[0]
 
-        if ".1" not in ano_search_string:
-            quantity = all_country_info[ano_search_string].values[0]
-            value = all_country_info[ano_search_string + '.1'].values[0]
+        if ".1" not in ano:
+            quantity = all_country_info[ano].values[0]
+            value = all_country_info[ano + '.1'].values[0]
 
-            item = ImportacaoItem(pais=importacao_country_search_string,
-                                        ano=ano_search_string,
+            item = ImportacaoItem(pais=pais,
+                                        ano=ano,
                                         quantidade=int(quantity),
                                         valor=int(value)
                                         ).to_dict()
@@ -201,38 +203,38 @@ def search_importacao(importacao_category_search_string, importacao_country_sear
     return result
 
 
-def search_processamento(processamento_category_search_string, processamento_product_search_string, ano_search_string=None):  # noqa: E501
-    """searches processamento
+def search_processamento(categoria, cultivar, ano=None):  # noqa: E501
+    """searches Processamento
 
-    By passing in the appropriate options, you can search for available processamento info in the system  # noqa: E501
+    By passing in the appropriate options, you can search for available Processamento info in the system  # noqa: E501
 
-    :param processamento_category_search_string: pass a category name search string for looking up processamento
-    :type processamento_category_search_string: str
-    :param processamento_product_search_string: pass a product name search string for looking up processamento
-    :type processamento_product_search_string: str
-    :param ano_search_string: pass a year search string for looking up processamento
-    :type ano_search_string: str
+    :param categoria: search within a category (Viniferas, Americanas e Hibridas, Uvas de mesa, or Sem classificacao)
+    :type categoria: str
+    :param cultivar: search for a cultivar name
+    :type cultivar: str
+    :param ano: search for a specific year
+    :type ano: str
 
     :rtype: List[ProcessamentoItem]
     """
 
     result = []
 
-    match processamento_category_search_string:
-        case 'Viníferas':
+    match categoria:
+        case 'Viniferas':
             file = download_csv("http://vitibrasil.cnpuv.embrapa.br/download/ProcessaViniferas.csv")
-        case 'Americanas e Híbridas':
+        case 'Americanas e Hibridas':
             file = download_csv("http://vitibrasil.cnpuv.embrapa.br/download/ProcessaAmericanas.csv")
         case 'Uvas de mesa':
             file = download_csv("http://vitibrasil.cnpuv.embrapa.br/download/ProcessaMesa.csv")
-        case 'Sem classificação':
+        case 'Sem classificacao':
             file = download_csv("http://vitibrasil.cnpuv.embrapa.br/download/ProcessaSemclass.csv")
 
     data = pd.read_csv(file, sep='\t')
         
-    all_crop_info = data[data['cultivar'] == processamento_product_search_string]
+    all_crop_info = data[data['cultivar'] == cultivar]
 
-    if ano_search_string is None:
+    if ano is None:
         for index, year in enumerate(all_crop_info):
             if index >= 3:
                 crop = all_crop_info['cultivar'].values[0]
@@ -241,7 +243,7 @@ def search_processamento(processamento_category_search_string, processamento_pro
                 if isinstance(quantity, str) == True:
                     continue
                 else:
-                    item = ProcessamentoItem(categoria=processamento_category_search_string,
+                    item = ProcessamentoItem(categoria=categoria,
                                                         cultivar=crop,
                                                         ano=int(year),
                                                         quantidade=int(quantity)
@@ -250,14 +252,14 @@ def search_processamento(processamento_category_search_string, processamento_pro
                 result.append(item)
     else:
         crop = all_crop_info['cultivar'].values[0]
-        quantity = all_crop_info[ano_search_string].values[0]
+        quantity = all_crop_info[ano].values[0]
 
         if isinstance(quantity, str) == True:
             pass
         else:
-            item = ProcessamentoItem(categoria=processamento_category_search_string,
+            item = ProcessamentoItem(categoria=categoria,
                                                 cultivar=crop,
-                                                ano=int(ano_search_string),
+                                                ano=int(ano),
                                                 quantidade=int(quantity)
                                                 ).to_dict()
 
@@ -265,15 +267,15 @@ def search_processamento(processamento_category_search_string, processamento_pro
     return result
 
 
-def search_producao(produto_search_string, ano_search_string=None):  # noqa: E501
-    """searches producao
+def search_producao(produto, ano=None):  # noqa: E501
+    """searches Producao
 
-    By passing in the appropriate options, you can search for available producao info in the system  # noqa: E501
+    By passing in the appropriate options, you can search for available Producao info in the system  # noqa: E501
 
-    :param produto_search_string: pass a product name search string for looking up producao
-    :type produto_search_string: str
-    :param ano_search_string: pass a year search string for looking up producao
-    :type ano_search_string: str
+    :param produto: search for a product name
+    :type produto: str
+    :param ano: search for a specific year
+    :type ano: str
 
     :rtype: List[ProducaoItem]
     """
@@ -284,24 +286,24 @@ def search_producao(produto_search_string, ano_search_string=None):  # noqa: E50
 
     data = pd.read_csv(file, sep=';')
         
-    all_product_info = data[data['produto'] == produto_search_string]
+    all_product_info = data[data['produto'] == produto]
 
-    if ano_search_string is None:
+    if ano is None:
         for index, year in enumerate(all_product_info):
             if index >= 3:
                 quantity = all_product_info[year].values[0]
 
-                item = ProducaoItem(produto=produto_search_string,
+                item = ProducaoItem(produto=produto,
                                     ano=int(year),
                                     quantidade=int(quantity)
                                     ).to_dict()
 
                 result.append(item)
     else:
-        quantity = all_product_info[ano_search_string].values[0]
+        quantity = all_product_info[ano].values[0]
 
-        item = ProducaoItem(produto=produto_search_string,
-                                        ano=int(ano_search_string),
+        item = ProducaoItem(produto=produto,
+                                        ano=int(ano),
                                         quantidade=int(quantity)
                                         ).to_dict()
 

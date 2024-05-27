@@ -19,10 +19,10 @@ class TestDefaultController(BaseTestCase):
     def test_search_comercializacao(self):
         """Test case for search_comercializacao
 
-        searches comercializacao
+        searches Comercializacao
         """
-        query_string = [('comercializacao_product_search_string', 'comercializacao_product_search_string_example'),
-                        ('ano_search_string', 'ano_search_string_example')]
+        query_string = [('produto', 'produto_example'),
+                        ('ano', 'ano_example')]
         response = self.client.open(
             '/comercializacao',
             method='GET',
@@ -33,11 +33,11 @@ class TestDefaultController(BaseTestCase):
     def test_search_exportacao(self):
         """Test case for search_exportacao
 
-        searches exportacao
+        searches Exportacao
         """
-        query_string = [('exportacao_category_search_string', 'exportacao_category_search_string_example'),
-                        ('exportacao_country_search_string', 'exportacao_country_search_string_example'),
-                        ('ano_search_string', 'ano_search_string_example')]
+        query_string = [('categoria', 'categoria_example'),
+                        ('pais', 'pais_example'),
+                        ('ano', 'ano_example')]
         response = self.client.open(
             '/exportacao',
             method='GET',
@@ -48,11 +48,11 @@ class TestDefaultController(BaseTestCase):
     def test_search_importacao(self):
         """Test case for search_importacao
 
-        searches importacao
+        searches Importacao
         """
-        query_string = [('importacao_category_search_string', 'importacao_category_search_string_example'),
-                        ('importacao_country_search_string', 'importacao_country_search_string_example'),
-                        ('ano_search_string', 'ano_search_string_example')]
+        query_string = [('categoria', 'categoria_example'),
+                        ('pais', 'pais_example'),
+                        ('ano', 'ano_example')]
         response = self.client.open(
             '/importacao',
             method='GET',
@@ -63,11 +63,11 @@ class TestDefaultController(BaseTestCase):
     def test_search_processamento(self):
         """Test case for search_processamento
 
-        searches processamento
+        searches Processamento
         """
-        query_string = [('processamento_category_search_string', 'processamento_category_search_string_example'),
-                        ('processamento_product_search_string', 'processamento_product_search_string_example'),
-                        ('ano_search_string', 'ano_search_string_example')]
+        query_string = [('categoria', 'categoria_example'),
+                        ('cultivar', 'cultivar_example'),
+                        ('ano', 'ano_example')]
         response = self.client.open(
             '/processamento',
             method='GET',
@@ -78,10 +78,10 @@ class TestDefaultController(BaseTestCase):
     def test_search_producao(self):
         """Test case for search_producao
 
-        searches producao
+        searches Producao
         """
-        query_string = [('produto_search_string', 'produto_search_string_example'),
-                        ('ano_search_string', 'ano_search_string_example')]
+        query_string = [('produto', 'produto_example'),
+                        ('ano', 'ano_example')]
         response = self.client.open(
             '/producao',
             method='GET',
